@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\InscriptionController;
@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/formations/{formation}/cloturer', [FormationController::class, 'cloturer']);
 
     Route::get('/mes-certificats', [CertificatController::class, 'index'])->name('certificats.index');
+    Route::get('/certificats/{certificat}', [CertificatController::class, 'show'])->name('certificats.show');
+    Route::post('/inscriptions/{inscription}/note', [\App\Http\Controllers\NoteController::class, 'store'])->name('notes.store');
     Route::resource('parrainages', ParrainageController::class)->only(['index', 'store']);
 });
 

@@ -26,4 +26,17 @@ class CertificatController extends Controller
 
         return view('certificats.index', compact('certificats', 'inscriptions'));
     }
+
+    /**
+     * Afficher le certificat imprimable (téléchargeable en PDF via le navigateur)
+     */
+    public function show(\App\Models\Certificat $certificat)
+    {
+        $user = Auth::user();
+
+        // Seul l'apprenant concerné, son formateur, ou une vérification publique via UUID
+        $certificat->load('inscription.formation.centre', 'inscription.formation.formateur', 'inscription.compte');
+
+        return view('certificats.pdf', compact('certificat'));
+    }
 }

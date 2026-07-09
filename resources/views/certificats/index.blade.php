@@ -37,8 +37,8 @@
                     <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem;">UUID</div>
                     <code style="font-size: 0.78rem; color: #60a5fa; user-select: all; word-break: break-all;">{{ $certificat->uuid_public }}</code>
                 </div>
-                <a href="{{ url('/verify/'.$certificat->uuid_public) }}" class="btn btn-primary" style="justify-content: center; font-size: 0.85rem; padding: 0.6rem 1rem;">
-                    📄 Voir le certificat public
+                <a href="{{ route('certificats.show', $certificat) }}" class="btn btn-primary" style="justify-content: center; font-size: 0.85rem; padding: 0.6rem 1rem;">
+                    📥 Télécharger le certificat PDF
                 </a>
             </div>
         @endforeach
@@ -75,8 +75,8 @@
                     @if($inscription->statut === 'cloture')
                         <span class="badge badge-danger">Clôturée</span>
                         @if($inscription->certificat)
-                            <a href="{{ url('/verify/'.$inscription->certificat->uuid_public) }}" class="btn btn-primary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
-                                🎓 Voir le certificat
+                            <a href="{{ route('certificats.show', $inscription->certificat) }}" class="btn btn-primary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+                                📥 Télécharger PDF
                             </a>
                         @endif
                     @else
