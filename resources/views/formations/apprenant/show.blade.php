@@ -138,11 +138,20 @@
         <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 1rem;">
             <div>
                 <h2 style="color: #6ee7b7; font-size: 1.15rem; margin-bottom: 0.25rem;">✅ Vous êtes inscrit(e)</h2>
-                <p style="margin: 0;">Statut actuel :
-                    <span class="badge {{ $inscription->statut === 'cloture' ? 'badge-danger' : 'badge-success' }}">
-                        {{ ucfirst($inscription->statut) }}
-                    </span>
-                </p>
+                <div style="display: flex; gap: 1.5rem; align-items: center; margin-top: 0.5rem;">
+                    <p style="margin: 0;">Statut :
+                        <span class="badge {{ $inscription->statut === 'cloture' ? 'badge-danger' : 'badge-success' }}">
+                            {{ ucfirst($inscription->statut) }}
+                        </span>
+                    </p>
+                    @if($inscription->note !== null)
+                        <p style="margin: 0;">Votre note :
+                            <span style="font-weight: 700; font-size: 1.1rem; color: {{ $inscription->note >= 10 ? '#4ade80' : '#f87171' }};">
+                                {{ number_format($inscription->note, 2) }}/20
+                            </span>
+                        </p>
+                    @endif
+                </div>
             </div>
             @if($inscription->statut === 'cloture' && $inscription->certificat)
                 <div class="flex gap-2 flex-wrap">
