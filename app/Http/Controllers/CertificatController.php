@@ -13,11 +13,17 @@ class CertificatController extends Controller
     {
         $user = Auth::user();
         
-        // Récupérer les certificats de l'utilisateur connecté
+        // Certificats obtenus
         $certificats = Certificat::whereHas('inscription', function ($query) use ($user) {
             $query->where('compte_id', $user->id);
-        })->with('inscription.formation')->latest()->get();
+        })->with('inscription.formation.centre')->latest()->get();
 
-        return view('certificats.index', compact('certificats'));
+        // Historique de toutes les inscriptions
+        $inscriptions = \App\Models\Inscription::where('compte_id', $user->id)
+            ->with(['formation.centre', 'formation.formateur', 'certificat'])
+            ->latest()
+            ->get();
+
+        return view('certificats.index', compact('certificats', 'inscriptions'));
     }
 }
