@@ -31,9 +31,30 @@
                 <input type="text" id="telephone" name="telephone" required class="form-input" placeholder="0600000000" value="{{ old('telephone') }}">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" x-data="{ show: false }">
                 <label for="password" class="form-label">🔒 Mot de passe</label>
-                <input type="password" id="password" name="password" required class="form-input" placeholder="Min. 6 caractères">
+                <div style="position: relative;">
+                    <input
+                        :type="show ? 'text' : 'password'"
+                        id="password"
+                        name="password"
+                        required
+                        class="form-input"
+                        placeholder="Min. 6 caractères"
+                        style="padding-right: 3rem;"
+                    >
+                    <button
+                        type="button"
+                        @click="show = !show"
+                        style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.1rem; line-height: 1; transition: color 0.2s;"
+                        :title="show ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+                        @mouseenter="$el.style.color = 'var(--text-main)'"
+                        @mouseleave="$el.style.color = 'var(--text-muted)'"
+                    >
+                        <span x-show="!show">👁️</span>
+                        <span x-show="show">🙈</span>
+                    </button>
+                </div>
             </div>
 
             <div class="form-group">

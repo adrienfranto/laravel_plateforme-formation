@@ -267,6 +267,10 @@ p { color: var(--text-muted); margin-bottom: 1rem; }
     box-shadow: 0 0 0 3px var(--primary-glow);
     background: rgba(0,0,0,0.35);
 }
+.form-input.input-error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px var(--danger-glow);
+}
 .form-input::placeholder { color: var(--text-muted); }
 .form-select option { background: #1e293b; color: #fff; }
 
