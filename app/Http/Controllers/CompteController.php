@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\Compte;
 use App\Models\Role;
 use App\Http\Requests\StoreCompteRequest;
@@ -14,11 +15,17 @@ class CompteController extends Controller {
             'prenom' => $request->prenom,
             'password' => Hash::make($request->password),
         ]);
-        return redirect()->back()->with('success', 'Compte crÈÈ avec succËs');
+        
+        $compte->roles()->attach($request->role_id);
+        
+        \Illuminate\Support\Facades\Auth::login($compte);
+
+        return redirect('/formations')->with('success', 'Votre compte a √©t√© cr√©√© avec succ√®s !');
     }
+
     public function attachRole(Request $request, $id) {
         $compte = Compte::findOrFail($id);
         $compte->roles()->attach($request->role_id);
-        return redirect()->back()->with('success', 'RÙle ajoutÈ');
+        return redirect()->back()->with('success', 'R√¥le ajout√©');
     }
 }

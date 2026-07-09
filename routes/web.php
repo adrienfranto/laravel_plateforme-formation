@@ -1,11 +1,11 @@
-<?php
+﻿<?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\CompteController;
 
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () { return redirect('/formations'); });
 
 Route::get('/login/apprenant', function () {
     \Illuminate\Support\Facades\Auth::login(\App\Models\Compte::where('prenom', 'Alice')->first());
@@ -19,7 +19,17 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
+Route::get('/register', function () {
+    $roles = \App\Models\Role::all();
+    return view('auth.register', compact('roles'));
+})->name('register');
+
 Route::post('/comptes', [CompteController::class, 'store']);
+
+Route::post('/logout', function () {
+    \Illuminate\Support\Facades\Auth::logout();
+    return redirect('/login');
+})->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::post('/comptes/{id}/roles', [CompteController::class, 'attachRole']);
