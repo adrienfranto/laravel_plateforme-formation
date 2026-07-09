@@ -36,14 +36,21 @@ class FormationController extends Controller
     public function show(Formation $formation)
     {
         $user = Auth::user();
+        $isFormateur = $user->roles->contains('code', 'formateur');
 
-        if ($formation->formateur_id === $user->id) {
+        // Tous les formateurs voient la liste des inscrits (pas de bouton inscription)
+        if ($isFormateur) {
             $inscriptions = Inscription::with('compte')
                 ->where('formation_id', $formation->id)
                 ->get();
-            return view('formations.formateur.show', compact('formation', 'inscriptions'));
+
+            // Seul le formateur propriétaire peut clôturer
+            $isOwner = $formation->formateur_id === $user->id;
+
+            return view('formations.formateur.show', compact('formation', 'inscriptions', 'isOwner'));
         }
 
+        // Apprenants : bouton inscription + leur statut
         $inscription = Inscription::where('compte_id', $user->id)
             ->where('formation_id', $formation->id)
             ->with('certificat')

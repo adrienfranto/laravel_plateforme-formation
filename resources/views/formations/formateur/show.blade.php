@@ -12,6 +12,9 @@
         <div>
             <span class="badge badge-purple mb-2">👨‍🏫 Espace Formateur</span>
             <h1 style="font-size: 1.75rem;">{{ $formation->titre }}</h1>
+            @if(!$isOwner)
+                <p class="text-muted text-sm" style="margin-top: 0.4rem;">Formateur : {{ $formation->formateur->prenom }} {{ $formation->formateur->nom }}</p>
+            @endif
         </div>
         <div class="flex gap-2" style="flex-wrap: wrap;">
             <span class="stat-pill">🏢 {{ $formation->centre->nom }}</span>
@@ -31,19 +34,27 @@
             </p>
         </div>
 
-        @if($inscriptions->count() > 0 && !$inscriptions->where('statut', 'cloture')->count())
-            <form action="{{ url('/formations/'.$formation->id.'/cloturer') }}" method="POST">
-                @csrf
-                <button
-                    type="submit"
-                    class="btn btn-success"
-                    onclick="return confirm('Clôturer la formation et générer les certificats pour tous les apprenants ?')"
-                >
-                    🎓 Clôturer et délivrer les certificats
-                </button>
-            </form>
-        @elseif($inscriptions->where('statut', 'cloture')->count())
-            <span class="badge badge-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Formation clôturée</span>
+        @if($isOwner)
+            @if($inscriptions->count() > 0 && !$inscriptions->where('statut', 'cloture')->count())
+                <form action="{{ url('/formations/'.$formation->id.'/cloturer') }}" method="POST">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                        onclick="return confirm('Clôturer la formation et générer les certificats pour tous les apprenants ?')"
+                    >
+                        🎓 Clôturer et délivrer les certificats
+                    </button>
+                </form>
+            @elseif($inscriptions->where('statut', 'cloture')->count())
+                <span class="badge badge-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Formation clôturée</span>
+            @endif
+        @else
+            @if($inscriptions->where('statut', 'cloture')->count())
+                <span class="badge badge-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Formation clôturée</span>
+            @else
+                <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-muted); padding: 0.5rem 1rem; font-size: 0.85rem;">👁️ Lecture seule</span>
+            @endif
         @endif
     </div>
 

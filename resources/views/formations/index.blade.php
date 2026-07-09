@@ -34,7 +34,7 @@
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        style="position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto;"
+        style="position: fixed; inset: 0; z-index: 9999; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto;"
     >
         {{-- Backdrop --}}
         <div @click="open = false" style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);"></div>
@@ -48,7 +48,7 @@
             x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-90"
-            style="position: relative; max-width: 560px; width: 100%; background: #0c1525; border: 1px solid rgba(255,255,255,0.12); border-radius: 22px; padding: 2.5rem; box-shadow: 0 30px 80px rgba(0,0,0,0.7); margin: auto;"
+            style="position: relative; max-width: 760px; width: 100%; background: #0c1525; border: 1px solid rgba(255,255,255,0.12); border-radius: 22px; padding: 2.5rem; box-shadow: 0 30px 80px rgba(0,0,0,0.7); margin: auto;"
         >
             {{-- Bouton fermer --}}
             <button

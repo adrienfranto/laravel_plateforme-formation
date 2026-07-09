@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class InscriptionController extends Controller {
     public function store(StoreInscriptionRequest $request, Formation $formation, ParrainageService $parrainageService) {
         $user = Auth::user();
+
+        // Les formateurs ne peuvent pas s'inscrire à une formation
+        abort_if($user->roles->contains('code', 'formateur'), 403, 'Les formateurs ne peuvent pas s\'inscrire à une formation.');
+
         $inscription = Inscription::firstOrCreate([
             'compte_id' => $user->id,
             'formation_id' => $formation->id,
         ]);
         $parrainageService->gererRecompense($inscription);
-        return back()->with('success', 'Vous �tes maintenant inscrit � cette formation.');
+        return back()->with('success', 'Vous êtes maintenant inscrit à cette formation.');
     }
 }
