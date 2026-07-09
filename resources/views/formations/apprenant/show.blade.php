@@ -58,7 +58,7 @@
             {{-- Backdrop --}}
             <div
                 @click="open = false"
-                style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(6px);"
+                style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);"
             ></div>
 
             {{-- Contenu du modal --}}

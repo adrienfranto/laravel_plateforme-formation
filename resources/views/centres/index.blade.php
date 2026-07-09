@@ -31,7 +31,7 @@
         style="position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto;"
     >
         {{-- Backdrop --}}
-        <div @click="open = false" style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);"></div>
+        <div @click="open = false" style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);"></div>
 
         {{-- Contenu --}}
         <div
