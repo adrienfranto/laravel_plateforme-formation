@@ -16,7 +16,7 @@ Route::get('/login/formateur', function () {
     return redirect('/formations');
 });
 Route::get('/login', function () {
-    return '<div style="font-family:sans-serif; text-align:center; padding:50px;"><h1>Connexion Rapide (Démo)</h1><a href="/login/apprenant" style="display:block;margin:10px;">Connexion Apprenant (Alice)</a><a href="/login/formateur" style="display:block;margin:10px;">Connexion Formateur (Jean)</a></div>';
+    return view('auth.login');
 })->name('login');
 
 Route::post('/comptes', [CompteController::class, 'store']);
