@@ -43,14 +43,13 @@
                         <a href="{{ route('comptes.index') }}" class="sidebar-link {{ request()->routeIs('comptes.*') ? 'active' : '' }}">
                             <span class="icon">👥</span> Utilisateurs
                         </a>
-                    @else
-                        <a href="{{ route('certificats.index') }}" class="sidebar-link {{ request()->routeIs('certificats.*') ? 'active' : '' }}">
-                            <span class="icon">🎓</span> Mes Certificats
-                        </a>
-                        <a href="{{ route('parrainages.index') }}" class="sidebar-link {{ request()->routeIs('parrainages.*') ? 'active' : '' }}">
-                            <span class="icon">🤝</span> Parrainages
-                        </a>
                     @endif
+                    <a href="{{ route('certificats.index') }}" class="sidebar-link {{ request()->routeIs('certificats.*') ? 'active' : '' }}">
+                        <span class="icon">🎓</span> Mes Certificats
+                    </a>
+                    <a href="{{ route('parrainages.index') }}" class="sidebar-link {{ request()->routeIs('parrainages.*') ? 'active' : '' }}">
+                        <span class="icon">🤝</span> Parrainages
+                    </a>
                 @endauth
             </div>
         </nav>
