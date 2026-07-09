@@ -23,7 +23,6 @@ class CentreController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'ville' => 'required|string|max:255',
-            'adresse' => 'required|string',
         ]);
 
         Centre::create($request->all());
