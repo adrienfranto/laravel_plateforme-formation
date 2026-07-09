@@ -145,9 +145,14 @@
                 </p>
             </div>
             @if($inscription->statut === 'cloture' && $inscription->certificat)
-                <a href="{{ url('/verify/'.$inscription->certificat->uuid_public) }}" class="btn btn-primary">
-                    🎓 Voir mon certificat
-                </a>
+                <div class="flex gap-2 flex-wrap">
+                    <a href="{{ url('/verify/'.$inscription->certificat->uuid_public) }}" class="btn btn-ghost">
+                        📄 Voir le certificat public
+                    </a>
+                    <a href="{{ route('certificats.show', $inscription->certificat) }}" class="btn btn-primary">
+                        📥 Télécharger le certificat PDF
+                    </a>
+                </div>
             @endif
         </div>
     </div>
