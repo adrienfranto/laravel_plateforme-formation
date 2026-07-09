@@ -245,12 +245,14 @@
 </head>
 <body>
 
+@if(!request()->has('embed'))
 <div class="toolbar">
     @auth
     <a href="{{ url()->previous() }}" class="btn btn-back">← Retour</a>
     @endauth
     <button onclick="window.print()" class="btn btn-download">📥 Télécharger en PDF</button>
 </div>
+@endif
 
 <div class="certificate">
     <div class="cert-border">

@@ -156,6 +156,23 @@
             @endif
         </div>
     </div>
+
+    @if($inscription->statut === 'cloture' && $inscription->certificat)
+        <div class="glass-panel" style="margin-top: 1.5rem;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 style="font-size: 1.2rem; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                    🏆 <span>Votre certificat</span>
+                </h2>
+                <a href="{{ route('certificats.show', $inscription->certificat) }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                    📥 Télécharger PDF
+                </a>
+            </div>
+            
+            <div style="width: 100%; height: 750px; border-radius: var(--radius-md); border: 1px solid var(--surface-border); overflow: hidden; background: #f0f4ff;">
+                <iframe src="{{ route('certificats.show', ['certificat' => $inscription->certificat, 'embed' => 'true']) }}" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+        </div>
+    @endif
 @endif
 
 @endsection
