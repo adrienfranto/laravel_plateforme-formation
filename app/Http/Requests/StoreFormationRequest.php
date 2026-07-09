@@ -9,8 +9,7 @@ class StoreFormationRequest extends FormRequest {
             'description' => 'required|string',
             'date_debut' => 'required|date',
             'date_fin' => 'required|date|after:date_debut',
-            'centre_id' => 'required|exists:centres,id',
-            'formateur_id' => 'required|exists:comptes,id'
+            'centre_id' => 'required|exists:centres,id'
         ];
     }
 }

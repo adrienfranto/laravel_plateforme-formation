@@ -15,63 +15,101 @@
     <div class="orb orb-3"></div>
 </div>
 
-<div class="container">
-    {{-- HEADER --}}
-    <header class="header-nav">
-        <a href="{{ route('formations.index') }}" class="brand" style="text-decoration: none;">
-            <span class="brand-icon">🎓</span>
-            FormationPro
-        </a>
-        <nav style="display: flex; align-items: center; gap: 1rem;">
+<div class="app-layout">
+    {{-- SIDEBAR --}}
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="{{ route('formations.index') }}" class="brand" style="text-decoration: none;">
+                <span class="brand-icon">🎓</span>
+                <span class="brand-text">FormationPro</span>
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h4 class="nav-section-title">Menu</h4>
+                <a href="{{ route('formations.index') }}" class="sidebar-link {{ request()->routeIs('formations.index') ? 'active' : '' }}">
+                    <span class="icon">📚</span> Catalogue
+                </a>
+                
+                @auth
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">📈</span> Tableau de bord
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">⚙️</span> Paramètres
+                    </a>
+                @endauth
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
             @auth
-                <a href="{{ route('formations.index') }}" class="nav-link">Catalogue</a>
-                <div class="user-chip">
-                    <span class="user-avatar">{{ strtoupper(substr(Auth::user()->prenom, 0, 1)) }}</span>
-                    <span>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-                    <span class="badge">{{ Auth::user()->roles->first()?->libelle ?? 'Invité' }}</span>
+                <div class="user-chip-sidebar">
+                    <div class="user-avatar">{{ strtoupper(substr(Auth::user()->prenom, 0, 1)) }}</div>
+                    <div class="user-info">
+                        <div class="name">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</div>
+                        <div class="role badge">{{ Auth::user()->roles->first()?->libelle ?? 'Invité' }}</div>
+                    </div>
                 </div>
-                <form action="{{ url('/logout') }}" method="POST" style="margin:0;">
+                <form action="{{ url('/logout') }}" method="POST" style="margin-top: 1rem; width: 100%;">
                     @csrf
-                    <button type="submit" class="btn btn-ghost">Déconnexion</button>
+                    <button type="submit" class="btn btn-ghost w-full">Déconnexion</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-ghost">Connexion</a>
-                <a href="{{ route('register') }}" class="btn btn-primary">S'inscrire</a>
+                <a href="{{ route('login') }}" class="btn btn-ghost w-full mb-2">Connexion</a>
+                <a href="{{ route('register') }}" class="btn btn-primary w-full">S'inscrire</a>
             @endauth
-        </nav>
-    </header>
-
-    {{-- FLASH MESSAGE --}}
-    @if(session('success'))
-        <div class="alert alert-success" x-data="{ show: true }" x-show="show" x-transition>
-            <span>✅ {{ session('success') }}</span>
-            <button @click="show = false" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1.1rem;">✕</button>
         </div>
-    @endif
+    </aside>
 
-    @if($errors->any())
-        <div class="alert alert-danger" x-data="{ show: true }" x-show="show" x-transition>
-            <div>
-                <strong>⚠️ Erreurs dans le formulaire :</strong>
-                <ul style="margin-top: 0.5rem; padding-left: 1.25rem;">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            <button @click="show = false" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1.1rem; align-self: flex-start;">✕</button>
+    {{-- MAIN CONTENT --}}
+    <div class="main-content">
+        <div class="container-inner">
+            {{-- HEADER MOBILE ONLY --}}
+            <header class="mobile-header">
+                <a href="{{ route('formations.index') }}" class="brand" style="text-decoration: none;">
+                    <span class="brand-icon">🎓</span>
+                </a>
+                <button class="btn btn-ghost btn-menu" onclick="document.querySelector('.sidebar').classList.toggle('show')">
+                    ☰
+                </button>
+            </header>
+
+            {{-- FLASH MESSAGE --}}
+            @if(session('success'))
+                <div class="alert alert-success" x-data="{ show: true }" x-show="show" x-transition>
+                    <span>✅ {{ session('success') }}</span>
+                    <button @click="show = false" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1.1rem;">✕</button>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger" x-data="{ show: true }" x-show="show" x-transition>
+                    <div>
+                        <strong>⚠️ Erreurs dans le formulaire :</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.25rem;">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <button @click="show = false" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1.1rem; align-self: flex-start;">✕</button>
+                </div>
+            @endif
+
+            {{-- VIEW CONTENT --}}
+            <main>
+                @yield('content')
+            </main>
+
+            {{-- FOOTER --}}
+            <footer style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem;">
+                <p>© {{ date('Y') }} FormationPro — Plateforme de Formation Certifiante</p>
+            </footer>
         </div>
-    @endif
-
-    {{-- CONTENU PRINCIPAL --}}
-    <main>
-        @yield('content')
-    </main>
-
-    {{-- FOOTER --}}
-    <footer style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem;">
-        <p>© {{ date('Y') }} FormationPro — Plateforme de Formation Certifiante</p>
-    </footer>
+    </div>
 </div>
+@stack('scripts')
 </body>
 </html>
