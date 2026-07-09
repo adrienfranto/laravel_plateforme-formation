@@ -20,6 +20,8 @@ class CentreController extends Controller
 
     public function store(Request $request)
     {
+        abort_unless(auth()->user()->roles->contains('code', 'formateur'), 403, 'Accès non autorisé.');
+
         $request->validate([
             'nom' => 'required|string|max:255',
             'ville' => 'required|string|max:255',
@@ -32,6 +34,8 @@ class CentreController extends Controller
 
     public function destroy(Centre $centre)
     {
+        abort_unless(auth()->user()->roles->contains('code', 'formateur'), 403, 'Accès non autorisé.');
+
         // On empêche la suppression si des formations y sont liées
         if ($centre->formations()->count() > 0) {
             return back()->withErrors(['erreur' => 'Impossible de supprimer ce centre car des formations y sont associées.']);

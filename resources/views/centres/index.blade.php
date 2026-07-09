@@ -13,13 +13,17 @@
                 <h1 class="gradient-title">Centres de Formation</h1>
                 <p>Gérez les centres partenaires où se déroulent les formations.</p>
             </div>
+            @if(Auth::user()->roles->contains('code', 'formateur'))
             <button @click="open = true" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
                 ➕ Nouveau Centre
             </button>
+            @endif
         </div>
     </div>
 
+
     {{-- ========================= OVERLAY MODAL ========================= --}}
+    @if(Auth::user()->roles->contains('code', 'formateur'))
     <div
         x-show="open"
         x-transition:enter="transition ease-out duration-200"
@@ -87,6 +91,7 @@
             </form>
         </div>
     </div>
+    @endif
 
     {{-- Si erreurs de validation, rouvrir le modal automatiquement --}}
     @if($errors->any() && !$errors->has('erreur'))
@@ -108,7 +113,9 @@
                         <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Nom du centre</th>
                         <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Ville</th>
                         <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Formations liées</th>
+                        @if(Auth::user()->roles->contains('code', 'formateur'))
                         <th style="padding: 1rem; color: var(--text-muted); font-weight: 600; text-align: right;">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -121,6 +128,7 @@
                             <td style="padding: 1rem;">
                                 <span class="stat-pill" style="font-size: 0.75rem;">{{ $centre->formations_count }} formation(s)</span>
                             </td>
+                            @if(Auth::user()->roles->contains('code', 'formateur'))
                             <td style="padding: 1rem; text-align: right;">
                                 <form action="{{ route('centres.destroy', $centre) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce centre ?');" style="display:inline-block;">
                                     @csrf
@@ -130,6 +138,7 @@
                                     </button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
