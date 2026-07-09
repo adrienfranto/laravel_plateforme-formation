@@ -82,6 +82,16 @@
                         <span class="badge {{ $inscription->statut === 'cloture' ? 'badge-danger' : 'badge-success' }}">
                             {{ ucfirst($inscription->statut) }}
                         </span>
+                        @if($inscription->statut === 'cloture' && $inscription->certificat)
+                            <div class="flex gap-1 ml-2">
+                                <a href="{{ url('/verify/'.$inscription->certificat->uuid_public) }}" class="btn btn-ghost" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" title="Voir le certificat public">
+                                    📄
+                                </a>
+                                <a href="{{ route('certificats.show', $inscription->certificat) }}" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" title="Télécharger le certificat PDF">
+                                    📥 PDF
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
