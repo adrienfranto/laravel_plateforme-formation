@@ -36,12 +36,21 @@
                     <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <span class="icon">📈</span> Tableau de bord
                     </a>
-                    <a href="{{ route('centres.index') }}" class="sidebar-link {{ request()->routeIs('centres.*') ? 'active' : '' }}">
-                        <span class="icon">🏢</span> Centres
-                    </a>
-                    <a href="{{ route('comptes.index') }}" class="sidebar-link {{ request()->routeIs('comptes.*') ? 'active' : '' }}">
-                        <span class="icon">👥</span> Utilisateurs
-                    </a>
+                    @if(Auth::user()->roles->contains('code', 'formateur'))
+                        <a href="{{ route('centres.index') }}" class="sidebar-link {{ request()->routeIs('centres.*') ? 'active' : '' }}">
+                            <span class="icon">🏢</span> Centres
+                        </a>
+                        <a href="{{ route('comptes.index') }}" class="sidebar-link {{ request()->routeIs('comptes.*') ? 'active' : '' }}">
+                            <span class="icon">👥</span> Utilisateurs
+                        </a>
+                    @else
+                        <a href="{{ route('certificats.index') }}" class="sidebar-link {{ request()->routeIs('certificats.*') ? 'active' : '' }}">
+                            <span class="icon">🎓</span> Mes Certificats
+                        </a>
+                        <a href="{{ route('parrainages.index') }}" class="sidebar-link {{ request()->routeIs('parrainages.*') ? 'active' : '' }}">
+                            <span class="icon">🤝</span> Parrainages
+                        </a>
+                    @endif
                 @endauth
             </div>
         </nav>

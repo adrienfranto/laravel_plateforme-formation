@@ -87,13 +87,11 @@
             </div>
         </div>
 
-        <div class="text-center">
-            <p class="text-muted text-sm" style="margin-bottom: 0;">
-                Pas encore de compte ?
-                <a href="{{ route('register') }}" style="color: var(--primary); text-decoration: none; font-weight: 600;">
-                    S'inscrire gratuitement
-                </a>
-            </p>
+        <div style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; text-align: center;">
+            <p class="text-muted" style="margin-bottom: 0.75rem;">Vous n'avez pas de compte ? <a href="{{ route('register') }}" style="color: var(--primary);">S'inscrire</a></p>
+            <a href="{{ route('verify.index') }}" class="btn btn-ghost" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                🛡️ Vérifier un certificat public
+            </a>
         </div>
 
     </div>

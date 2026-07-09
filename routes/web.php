@@ -6,6 +6,8 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\CompteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CentreController;
+use App\Http\Controllers\CertificatController;
+use App\Http\Controllers\ParrainageController;
 
 Route::get('/', function () { return redirect('/login'); });
 
@@ -42,7 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('formations', FormationController::class);
     Route::post('/formations/{formation}/inscriptions', [InscriptionController::class, 'store']);
     Route::post('/formations/{formation}/cloturer', [FormationController::class, 'cloturer']);
+
+    Route::get('/mes-certificats', [CertificatController::class, 'index'])->name('certificats.index');
+    Route::resource('parrainages', ParrainageController::class)->only(['index', 'store']);
 });
 
 // Vérification publique des certificats
-Route::get('/verify/{uuid}', [VerificationController::class, 'show']);
+Route::get('/verify', [VerificationController::class, 'index'])->name('verify.index');
+Route::post('/verify/search', [VerificationController::class, 'search'])->name('verify.search');
+Route::get('/verify/{uuid}', [VerificationController::class, 'show'])->name('verify.show');
