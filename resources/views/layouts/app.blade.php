@@ -28,16 +28,19 @@
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <h4 class="nav-section-title">Menu</h4>
-                <a href="{{ route('formations.index') }}" class="sidebar-link {{ request()->routeIs('formations.index') ? 'active' : '' }}">
+                <a href="{{ route('formations.index') }}" class="sidebar-link {{ request()->routeIs('formations.*') ? 'active' : '' }}">
                     <span class="icon">📚</span> Catalogue
                 </a>
                 
                 @auth
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <span class="icon">📈</span> Tableau de bord
                     </a>
-                    <a href="#" class="sidebar-link">
-                        <span class="icon">⚙️</span> Paramètres
+                    <a href="{{ route('centres.index') }}" class="sidebar-link {{ request()->routeIs('centres.*') ? 'active' : '' }}">
+                        <span class="icon">🏢</span> Centres
+                    </a>
+                    <a href="{{ route('comptes.index') }}" class="sidebar-link {{ request()->routeIs('comptes.*') ? 'active' : '' }}">
+                        <span class="icon">👥</span> Utilisateurs
                     </a>
                 @endauth
             </div>

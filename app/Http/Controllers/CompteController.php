@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Hash;
 class CompteController extends Controller
 {
     /**
+     * Liste des comptes (utilisateurs)
+     */
+    public function index()
+    {
+        $comptes = Compte::with('roles')->orderBy('nom')->get();
+        return view('comptes.index', compact('comptes'));
+    }
+
+    /**
      * Inscription : création d'un compte + attribution du rôle + connexion auto
      */
     public function store(StoreCompteRequest $request)
