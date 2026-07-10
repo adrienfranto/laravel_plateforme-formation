@@ -12,11 +12,10 @@ Cette requête utilise une clause `WITH` (CTE) pour insérer l'utilisateur dans 
 
 ```sql
 WITH nouvel_apprenant AS (
-    INSERT INTO comptes (prenom, nom, email, telephone, mot_de_passe, created_at, updated_at)
+    INSERT INTO comptes (prenom, nom, telephone, password, created_at, updated_at)
     VALUES (
         'Lucas', 
         'Apprenant', 
-        'lucas@example.com', 
         '0611223344', 
         '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- Mot de passe : password
         NOW(), 
@@ -38,11 +37,10 @@ Même principe, mais nous associons ce compte au rôle "formateur".
 
 ```sql
 WITH nouveau_formateur AS (
-    INSERT INTO comptes (prenom, nom, email, telephone, mot_de_passe, created_at, updated_at)
+    INSERT INTO comptes (prenom, nom, telephone, password, created_at, updated_at)
     VALUES (
         'Sophie', 
         'Formatrice', 
-        'sophie@example.com', 
         '0699887766', 
         '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- Mot de passe : password
         NOW(), 
